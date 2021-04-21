@@ -12,7 +12,7 @@ const Root = styled.div`
   padding: 12px;
   color: ${({ theme }) => theme.colors.primary.contrastText};
   background: ${({ theme }) => theme.colors.primary.dark};
-  border: 2px solid rgba(0, 0, 0, 0.7);
+  border: 2px solid ${({ theme }) => theme.colors.primary.light};
 `
 
 const LevelInputContainer = styled.div`
