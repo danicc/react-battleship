@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Button } from '../button'
 
 const Root = styled.div`
   display: flex;
@@ -21,16 +22,9 @@ const LevelInputContainer = styled.div`
   gap: 8px;
 `
 
-const SubmitButton = styled.button`
+const SubmitButton = styled(Button)`
   align-self: center;
   margin: 8px 0;
-  padding: 8px 12px;
-  color: ${({ theme }) => theme.colors.primary.contrastText};
-  background-color: ${({ theme }) => theme.colors.primary.dark};
-  border: 1px solid ${({ theme }) => theme.colors.primary.light};
-  box-shadow: 5px 8px 15px 0px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  outline: none;
 `
 
 type LevelName = 'easy' | 'medium' | 'hard' | 'custom'
@@ -132,7 +126,7 @@ function PickAttempts({ onAttemptsChange, onSubmit }: Props): JSX.Element {
         />
         <label htmlFor="hard">Hard (50 attempts)</label>
       </LevelInputContainer>
-      <SubmitButton onClick={onSubmit}>Start Game</SubmitButton>
+      <SubmitButton label="Start Game" onClick={onSubmit} />
     </Root>
   )
 }

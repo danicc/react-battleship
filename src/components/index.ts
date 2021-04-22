@@ -3,5 +3,6 @@ import { BoardGrid } from './board'
 import { PickAttempts } from './pick-attempts'
 import { Layout } from './layout'
 import { Menu } from './menu'
+import { Button } from './button'
 
-export { BoardGrid, ShipsStatus, PickAttempts, Layout, Menu }
+export { BoardGrid, Button, ShipsStatus, PickAttempts, Layout, Menu }

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
+import { Button } from '../button'
 
 const Root = styled.div`
   width: 100vw;
@@ -19,15 +20,10 @@ const MainContent = styled.div`
   align-items: center;
 `
 
-const MainMenuButton = styled(Link)`
+const MainMenuButton = styled(Button)`
   position: absolute;
   top: 8px;
   left: 8px;
-  padding: 8px 12px;
-  color: ${({ theme }) => theme.colors.primary.contrastText};
-  background-color: ${({ theme }) => theme.colors.primary.dark};
-  border: 1px solid ${({ theme }) => theme.colors.primary.light};
-  box-shadow: 5px 8px 15px 0px rgba(0, 0, 0, 0.5);
 `
 
 type Props = {
@@ -35,10 +31,16 @@ type Props = {
 }
 function Layout({ children }: Props): JSX.Element {
   const location = useLocation()
+  const history = useHistory()
   const isInHome = location.pathname === '/'
+
+  function handleOnMainMenuClick() {
+    history.push('/')
+  }
+
   return (
     <Root>
-      {!isInHome && <MainMenuButton to="/"> Main Menu</MainMenuButton>}
+      {!isInHome && <MainMenuButton label="Main Menu" onClick={handleOnMainMenuClick} />}
       <MainContent>{children}</MainContent>
     </Root>
   )
