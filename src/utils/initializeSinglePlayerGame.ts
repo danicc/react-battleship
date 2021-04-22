@@ -1,5 +1,5 @@
 import { createBoard, createInitialShips, locateShipInBoard } from 'utils'
-import { Game, Ship } from 'types'
+import { Game, GamePhase, Ship } from 'types'
 
 function initializeSinglePlayerGame(boardSize: number, attempts: number): Game {
   let boardGrid = createBoard(boardSize)
@@ -19,7 +19,7 @@ function initializeSinglePlayerGame(boardSize: number, attempts: number): Game {
     landedShots: 0,
     initialAttempts: attempts,
     currentAttempts: attempts,
-    phase: 'PLAYING',
+    phase: GamePhase.PLAYING,
   }
 }
 

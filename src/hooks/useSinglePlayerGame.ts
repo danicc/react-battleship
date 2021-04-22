@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { initializeSinglePlayerGame } from 'utils'
-import { Game } from 'types'
+import { Game, GamePhase } from 'types'
 
 const initialState: Game = {
   boardGrid: [[]],
@@ -12,7 +12,7 @@ const initialState: Game = {
   landedShots: 0,
   initialAttempts: 0,
   currentAttempts: 0,
-  phase: 'PLAYING',
+  phase: GamePhase.PLAYING,
 }
 
 type InitGameAction = {
@@ -69,7 +69,7 @@ function reducer(state = initialState, action: Action) {
 
       let updatePhase = phase
       if (!updatedAliveShips.length) {
-        updatePhase = 'GAME_WIN'
+        updatePhase = GamePhase.GAME_WIN
       }
 
       const leftSide = ships.slice(0, shootedShipIdx)
@@ -91,7 +91,7 @@ function reducer(state = initialState, action: Action) {
 
       let updatedPhase = phase
       if (isGameOver) {
-        updatedPhase = 'GAME_OVER'
+        updatedPhase = GamePhase.GAME_OVER
       }
       return {
         ...state,

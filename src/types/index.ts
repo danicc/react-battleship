@@ -19,6 +19,11 @@ export type Cell = {
   enabled: boolean
 }
 
+export enum GamePhase {
+  PLAYING = 'PLAYING',
+  GAME_WIN = 'GAME_WIN',
+  GAME_OVER = 'GAME_OVER',
+}
 export type Game = {
   boardGrid: Board
   ships: Ship[]
@@ -29,7 +34,7 @@ export type Game = {
   landedShots: number
   initialAttempts: number
   currentAttempts: number
-  phase: 'PLAYING' | 'GAME_OVER' | 'GAME_WIN'
+  phase: GamePhase
 }
 
 export type GameStatus = {

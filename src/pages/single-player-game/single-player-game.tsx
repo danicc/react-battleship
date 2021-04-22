@@ -3,16 +3,19 @@ import Confetti from 'react-confetti'
 import format from 'date-fns/format'
 import { PickAttempts, BoardGrid, ShipsStatus } from 'components'
 import { add as addSinglePlayerGame } from 'services/singlePlayerGames'
-import { Cell } from 'types'
+import { Cell, GamePhase } from 'types'
 import useSinglePlayerGame from 'hooks/useSinglePlayerGame'
 import { BoardContainer, GameStatus, Overlay, StatusContainer } from './single-player-game.styles'
 
 const BOARD_SIZE = 10
 
-type PagePhase = 'IDLE' | 'STARTED'
+enum PagePhase {
+  IDLE = 'IDLE',
+  STARTED = 'STARTED',
+}
 
 function SinglePlayerGame(): JSX.Element {
-  const [pagePhase, setPagePhase] = useState<PagePhase>('IDLE')
+  const [pagePhase, setPagePhase] = useState<PagePhase>(PagePhase.IDLE)
   const [levelAttempts, setLevelAttempts] = useState(0)
   const [
     {
@@ -30,20 +33,20 @@ function SinglePlayerGame(): JSX.Element {
   const accuracy = (turns > 0 ? (landedShots * 100) / turns : 0).toFixed(2)
 
   useEffect(() => {
-    if (pagePhase === 'STARTED') {
+    if (pagePhase === PagePhase.STARTED) {
       dispatch({ type: 'INIT_GAME', payload: { boardSize: BOARD_SIZE, attempts: levelAttempts } })
     }
   }, [dispatch, levelAttempts, pagePhase])
 
   useEffect(() => {
-    const finishedGame = gamePhase === 'GAME_WIN' || gamePhase === 'GAME_OVER'
+    const finishedGame = gamePhase === GamePhase.GAME_WIN || gamePhase === GamePhase.GAME_OVER
     if (finishedGame) {
       const singlePlayerGameStatus = {
         startTime: format(startGameDate || new Date(), 'MM-dd-yyyy hh:mm aaa'),
         endTime: format(endGameDate || new Date(), 'MM-dd-yyyy hh:mm aaa'),
         turns,
         accuracy,
-        status: gamePhase === 'GAME_WIN' ? 'Won' : 'Lost',
+        status: gamePhase === GamePhase.GAME_WIN ? 'Won' : 'Lost',
       }
       addSinglePlayerGame(singlePlayerGameStatus)
     }
@@ -77,12 +80,12 @@ function SinglePlayerGame(): JSX.Element {
     dispatch({ type: 'INIT_GAME', payload: { boardSize: BOARD_SIZE, attempts: levelAttempts } })
   }
 
-  if (pagePhase === 'IDLE') {
+  if (pagePhase === PagePhase.IDLE) {
     return (
       <PickAttempts
         onAttemptsChange={handleOnLevelAttemptsChange}
         onSubmit={() => {
-          setPagePhase('STARTED')
+          setPagePhase(PagePhase.STARTED)
         }}
       />
     )
@@ -90,16 +93,16 @@ function SinglePlayerGame(): JSX.Element {
 
   return (
     <>
-      {gamePhase === 'GAME_WIN' && <Confetti />}
+      {gamePhase === GamePhase.GAME_WIN && <Confetti />}
       <h4>Attempts left: {currentAttempts === Infinity ? '∞' : currentAttempts}</h4>
       <BoardContainer>
-        {gamePhase === 'GAME_OVER' && (
+        {gamePhase === GamePhase.GAME_OVER && (
           <Overlay>
             <h5>Game Over</h5>
             <button onClick={initGame}>Try Again!</button>
           </Overlay>
         )}
-        {gamePhase === 'GAME_WIN' && (
+        {gamePhase === GamePhase.GAME_WIN && (
           <Overlay>
             <h5>You Win!</h5>
             <button onClick={initGame}>Play Again!</button>
