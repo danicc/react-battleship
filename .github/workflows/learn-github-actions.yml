@@ -24,8 +24,5 @@ jobs:
                 node-version: 'latest'
             - name: Print greeting
               run: PUBLIC_IP=${{ steps.publicIp.outputs.ipv4 }} node greeting.js
-            - name: "Comment PR React Native Preview Urls"
-              uses: actions/github-script@0.3.0
-              with:
-                script:
-                    console.log("Bye", {context})
+            - name: Goodbye
+              run: echo "goodbye" ${{ runner.name }}  ${{ runner.os }}
