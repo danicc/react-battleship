@@ -1,0 +1,1 @@
+console.log(`Hi from ${steps.ip.outputs.ipv4}`)

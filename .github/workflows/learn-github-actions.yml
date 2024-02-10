@@ -1,0 +1,32 @@
+
+# Optional - The name of the workflow as it will appear in the "Actions" tab of the GitHub repository. If this field is omitted, the name of the workflow file will be used instead.
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+# event
+on: 
+    pull_request:
+        branches: ['main']
+jobs:
+    hello-world:
+        # runner
+        runs-on: ubuntu-latest
+        steps:
+            # get public id using an action.
+            - name: Public Ip
+              id: publicIp
+              uses: haythem/public-ip@v1.3
+            # setup node in the environment
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 'lts'
+            - name: Print greeting
+              run: node scripts/greeting.js
+            - name: "Comment PR React Native Preview Urls"
+              uses: actions/github-script@0.3.0
+              with:
+                script:
+                    console.log("Bye", {context})
+
+
+            
