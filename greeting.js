@@ -1,1 +1,1 @@
-console.log(`Hi from ${steps.ip.outputs.ipv4}`)
+console.log(`Hi from ${process.env.PUBLIC_IP}`)
