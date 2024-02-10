@@ -21,12 +21,9 @@ jobs:
               with:
                 node-version: 'latest'
             - name: Print greeting
-              run: node scripts/greeting.js
+              run: node ./.github/scripts/greeting.js
             - name: "Comment PR React Native Preview Urls"
               uses: actions/github-script@0.3.0
               with:
                 script:
                     console.log("Bye", {context})
-
-
-            
