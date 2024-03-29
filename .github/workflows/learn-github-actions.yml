@@ -1,0 +1,28 @@
+
+# Optional - The name of the workflow as it will appear in the "Actions" tab of the GitHub repository. If this field is omitted, the name of the workflow file will be used instead.
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+# event
+on: 
+    pull_request:
+        branches: ['main']
+jobs:
+    hello-world:
+        # runner
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            # get public id using an action.
+            - name: Public Ip
+              id: publicIp
+              uses: haythem/public-ip@v1.3
+            # setup node in the environment
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 'latest'
+            - name: Print greeting
+              run: PUBLIC_IP=${{ steps.publicIp.outputs.ipv4 }} node greeting.js
+            - name: Goodbye
+              run: echo "goodbye" ${{ runner.name }}  ${{ runner.os }}
